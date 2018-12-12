@@ -234,16 +234,16 @@ message.channel.send(killEmbed);
      if(cmd === `${prefix}help`) {
       let helpEmbed = new Discord.RichEmbed()
       .setDescription("Server Information - Thank you for using our bot")
-      .setTitle("Help")
+      .setTitle("a List of commands you can use :slight_smile:")
       .setTimestamp()
-      .setColor("#3498db")
-      .addField("$info","gives you info about the server", true) 
-      .addField("$kiss @Mention", "Kisses the mentioned person", true)
-      .addField("$hug @Mention", "Hugs the mentioned person", true)
-      .addField("$kill @Mention", "Kills the Mentioned person", true)
-      .addField("$fuck @Mention","Fucks the mentioned person", true)
-      .addField("$ask ","Answers your question with yes / no", true)
-      .addField("$rape @Mention","Rapes The Person You mentioned", true)
+      .setColor("BLUE")
+      .addField("$info","gives you info about the server", false) 
+      .addField("$kiss @Mention", "Kisses the mentioned person", false)
+      .addField("$hug @Mention", "Hugs the mentioned person", false)
+      .addField("$kill @Mention", "Kills the Mentioned person", false)
+      .addField("$fuck @Mention","Fucks the mentioned person", false)
+      .addField("$ask","Answers your question with yes / no", false)
+      .addField("$rape @Mention","Rapes The Person You mentioned", false)
 
 
 
@@ -475,5 +475,6 @@ bot.on("messageDelete", async message => {
   
   deletechannel.send(deleteEmbed);
 })
+
 
 bot.login(process.env.BOT_TOKEN)
