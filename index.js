@@ -247,6 +247,7 @@ message.channel.send(killEmbed);
 
 
      if (cmd === `${prefix}warn`){
+         message.delete();
       if (message.author.id != "515231975150452758")
       if (message.author.id != "284151161291014144") return;
       let wUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
