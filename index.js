@@ -2,6 +2,7 @@ const Discord = require ("discord.js");
 const bot = new Discord.Client({disableEveryone: true});
 const prefix = "$"
 const ms = require ("ms");
+const botconfig = require('./botconfig.json');
 bot.commands = new Discord.Collection();
 
 bot.on(`ready`, ()=>{
@@ -358,23 +359,23 @@ message.channel.send(killEmbed);
         message.delete();
      if (message.author.id != "515231975150452758")
      if (message.author.id != "284151161291014144") return;
-     let wUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
-     if (!wUser) return message.channel.send("Please Mention a User")
-     let wReason = args.join(" ").slice(22);
+     let awUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+     if (!awUser) return message.channel.send("Please Mention a User")
+     let awReason = args.join(" ").slice(22);
     message.channel.send("**DONE!**")
    
-   let warnEmbed = new Discord.RichEmbed()
+   let awarnEmbed = new Discord.RichEmbed()
    .setDescription("NEW ADMINSTRATION WARN!")
    .setColor("#96003e")
    .setTimestamp()
-   .addField("For:", `${wUser} ID: ${wUser.id}`)
+   .addField("For:", `${awUser} ID: ${awUser.id}`)
    .addField("By:", `${message.author} ID: ${message.author.id}`)
    .addField("Channel:", message.channel)
-   .addField("Reason:", wReason);
+   .addField("Reason:", awReason);
    
-   let warnChannel = bot.channels.get('521984073095315466').send(warnEmbed)
-   if(!warnChannel) return message.channel.send("Can't Find Channel");
-     warnChannel.send(warnEmbed).then(()=>{
+   let awarnChannel = bot.channels.get('521984073095315466').send(awarnEmbed)
+   if(!awarnChannel) return message.channel.send("Can't Find Channel");
+     awarnChannel.send(awarnEmbed).then(()=>{
    return;
      })
    }
