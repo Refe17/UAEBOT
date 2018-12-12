@@ -31,7 +31,7 @@ else {
 ops.active.set(message.guild.id, data);
 
 async function play(bot, ops ,data) {
-    bot.channels.get(data.queue[0].announceChannel).send(`Now Playing: ${data.queue[0]} | Requested By: ${data,queue[0].requester}`)
+    bot.channels.get(data.queue[0].announceChannel).send(`Now Playing: ${data.queue[0].songTitle} | Requested By: ${data,queue[0].requester}`)
    data.dispatcher = await data.connection.play(ytdl(data.queue[0].url, { filter: 'audioonly'})) 
 data.dispatcher.guildID = data.guildID;
 data.dispatcher.once('finish', function(){
