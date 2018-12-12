@@ -30,7 +30,7 @@ bot.on("message", async message => {
 
 
   if(cmd === `${prefix}mute`){
-    let mRole = message.guild.roles.find("name", "Discord STAFF")
+    let mRole = message.guild.roles.find("name", "● Discord STAFF")
     if(message.member.roles.has(mRole.id)) {
     }else
     message.reply("You do not have the permission to do that.")
