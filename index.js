@@ -3,8 +3,13 @@ const bot = new Discord.Client({disableEveryone: true});
 const prefix = "$"
 const ms = require ("ms");
 const fs = require("fs")
+const active = new Map()
+const ownerID = "284151161291014144"
 bot.commands = new Discord.Collection();
-
+let ops = {
+    ownerID: ownerID,
+    active: active
+}
 fs.readdir("./commands/", (err, files)=>{
     if(err) console.log(err);
 
@@ -513,4 +518,6 @@ bot.on("messageDelete", async message => {
   
   deletechannel.send(deleteEmbed);
 })
+
+
 bot.login(process.env.BOT_TOKEN)
