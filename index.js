@@ -2,6 +2,7 @@ const Discord = require ("discord.js");
 const bot = new Discord.Client({disableEveryone: true});
 const prefix = "$"
 const ms = require ("ms");
+const botconfig = require('./botconfig.json');
 bot.commands = new Discord.Collection();
 
 bot.on(`ready`, ()=>{
@@ -30,7 +31,7 @@ bot.on("message", async message => {
 
 
   if(cmd === `${prefix}mute`){
-    let mRole = message.guild.roles.find("name", "Discord STAFF")
+    let mRole = message.guild.roles.find("name", "● Discord STAFF")
     if(message.member.roles.has(mRole.id)) {
     }else 
     return message.reply("You do not have the permission to do that.")
@@ -460,3 +461,5 @@ bot.on("messageDelete", async message => {
   
   deletechannel.send(deleteEmbed);
 })
+
+bot.login(process.env.BOT_TOKEN)
