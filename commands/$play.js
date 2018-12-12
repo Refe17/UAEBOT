@@ -22,19 +22,21 @@ data.queue.push({
     announceChannel: message.channel.id
 });
 
-if (!data.dispatcher) play(bot, ops, data);
+if (!data.dispatcher) playStream(bot, ops, data);
 else {
-    message.channel.send(`Added to queue: ${info.title} | Requested By: ${message.author.id}`)
+return;
 }
 ops.active.set(message.guild.id, data);
 
-async function play(bot, ops ,data) {
-    bot.channels.get(data.queue[0]).send(`Now Playing: ${data.queue[0].songTitle} | Requested By: ${data,queue[0].requester}`)
+async function playStream(bot, ops ,data) {
+    bot.channels.get(data.queue[0]).then(()=>{
+    message.channel.send(`Now Playing: ${data.queue[0].songTitle} | Requested By: ${data,queue[0].requester}`)
    data.dispatcher = await data.connection.playStream(ytdl(data.queue[0].url, { filter: 'audioonly'})); 
 data.dispatcher.guildID = data.guildID;
 data.dispatcher.once('finish', function(){
     finish(bot, ops , this);
 });
+})
 }
 function finish(bot, ops, dispatcher) {
 
