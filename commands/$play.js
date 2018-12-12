@@ -6,7 +6,6 @@ if(!message.member.voiceChannel) return message.channel.send('Please connect to 
 if (!args[0]) return message.channel.send('Sorry, please input a url following the command')
 let validate = await ytdl.validateURL(args[0])
 if (!validate) return message.channel.send('Sorry, Please input a valid URL')
-let dispatcher = await connection.playStream(ytdl(args[0], { filter: 'audioonly' }));
 
 
 let info = await ytdl.getInfo(args[0]);
@@ -30,7 +29,7 @@ ops.active.set(message.guild.id, data);
 
 async function play(bot, ops ,data) {
     bot.channels.get(data.queue[0].announceChannel).send(`Now Playing: ${data.queue[0].songTitle} | Requested By: ${data,queue[0].requester}`)
-   data.dispatcher = await data.connection.play(ytdl(data.queue[0].url, { filter: 'audioonly'})); 
+   data.dispatcher = await data.connection.playStream(ytdl(data.queue[0].url, { filter: 'audioonly'})); 
 data.dispatcher.guildID = data.guildID;
 data.dispatcher.once('finish', function(){
     finish(bot, ops , this);
