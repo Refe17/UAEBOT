@@ -250,6 +250,7 @@ message.channel.send(killEmbed);
       if (message.author.id != "515231975150452758")
       if (message.author.id != "284151161291014144") return;
       let wUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+      if (!wUser) return message.channel.send("Please Mention a User")
       let wReason = args.join(" ").slice(22);
     message.delete().catch();
     let botmessage = args.join(" ");
@@ -365,15 +366,5 @@ bot.on("messageDelete", async message => {
   
   deletechannel.send(deleteEmbed);
 })
-
-
-
-
-
-
-
-
-
-
 
 bot.login(process.env.BOT_TOKEN)
