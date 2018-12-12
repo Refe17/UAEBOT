@@ -361,6 +361,7 @@ message.channel.send(killEmbed);
      let wUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
      if (!wUser) return message.channel.send("Please Mention a User")
      let wReason = args.join(" ").slice(22);
+    message.channel.send("**DONE!**")
    
    let warnEmbed = new Discord.RichEmbed()
    .setDescription("NEW ADMINSTRATION WARN!")
