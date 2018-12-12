@@ -91,7 +91,21 @@ muteChannel.send(muteEmbed).then(()=>{
     
 })
   }
-
+  if(cmd === `${prefix}rape`){
+    message.delete();
+    let rUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+    if(!rUser) return message.channel.send("Please Mention a User")
+    let rReason = args.join(" ").slice(22);
+    if(!rReason) return message.channel.send("What's The Reason :thinking:")
+    let rapeEmbed = new Discord.RichEmbed()
+    .setColor("#96003e")
+    .setTimestamp()
+    .setAuthor(message.author.tag, message.author.avatarURL)
+    .setImage("https://image.prntscr.com/image/SBIU91x3SZWqo_VXRJRkrw.png")
+    .setDescription(`${message.author} You have succesfully raped ${rUser}`)
+    .addField("Reason:", rReason);
+    message.channel.send(rapeEmbed)
+  }
 
   if (message.content.startsWith(prefix + "ask")) {
     if(!args[2]) return message.reply("Ask a full question bitch")
@@ -461,4 +475,5 @@ bot.on("messageDelete", async message => {
   
   deletechannel.send(deleteEmbed);
 })
+
 bot.login(process.env.BOT_TOKEN)
