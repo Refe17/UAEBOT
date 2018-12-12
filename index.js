@@ -2,8 +2,24 @@ const Discord = require ("discord.js");
 const bot = new Discord.Client({disableEveryone: true});
 const prefix = "$"
 const ms = require ("ms");
-const ownerID = '284151161291014144'
+const fs = require("fs")
 bot.commands = new Discord.Collection();
+
+fs.readdir("./commands/", (err, files)=>{
+    if(err) console.log(err);
+
+    let jsfile = files.filter(f => f.split(".").pop() === "js")
+if(jsfile.length <= 0){
+    console.log("couldn't find commands,")
+    return;
+}
+
+jsfile.forEach((f,i) =>{
+    let props = require(`./commands/${f}`);
+    console.log(`${f} loaded!`)
+    bot.commands.set(props.help.name, props);
+})
+})
 
 bot.on(`ready`, ()=>{
   console.log(`${bot.user.username} is online!`);
@@ -26,20 +42,10 @@ bot.on("message", async message => {
   let cmd = messageArray[0];
   let args = messageArray.slice(1);
 
-  let ops = {
-      ownerID: ownerID
-  }
 
   let commandfile = bot.commands.get(cmd.slice(prefix.length));
-  if(commandfile) commandfile.run(bot,message,args,ops);
-try {
-    let commandFile = require(`./commands/${cmd}.js`);
-    commandFile.run(bot ,message, args, ops);
-    delete require.cache[require.resolve(`./commands/${cmd}.js`)]
+  if(commandfile) commandfile.run(bot,message,args);
 
-} catch(e) {
-    console.log(e.stack);
-}
   if(cmd === `${prefix}adminhelp`){
     let mRole = message.guild.roles.find("name", "● Discord STAFF")
     if(message.member.roles.has(mRole.id)) {
