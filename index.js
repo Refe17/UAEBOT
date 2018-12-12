@@ -34,6 +34,7 @@ bot.on("message", async message => {
     if(message.member.roles.has(mRole.id)) {
     }else 
     return message.reply("You do not have the permission to do that.")
+  
 let mUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
 if(!mUser) return message.reply("Couldn't Find User")
 
@@ -459,5 +460,3 @@ bot.on("messageDelete", async message => {
   
   deletechannel.send(deleteEmbed);
 })
-
-bot.login(process.env.BOT_TOKEN)
