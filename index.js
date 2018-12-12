@@ -2,6 +2,7 @@ const Discord = require ("discord.js");
 const bot = new Discord.Client({disableEveryone: true});
 const prefix = "$"
 const ms = require ("ms");
+const ownerID = '284151161291014144'
 bot.commands = new Discord.Collection();
 
 bot.on(`ready`, ()=>{
@@ -25,11 +26,15 @@ bot.on("message", async message => {
   let cmd = messageArray[0];
   let args = messageArray.slice(1);
 
+  let ops = {
+      ownerID: ownerID
+  }
+
   let commandfile = bot.commands.get(cmd.slice(prefix.length));
-  if(commandfile) commandfile.run(bot,message,args);
+  if(commandfile) commandfile.run(bot,message,args,ops);
 try {
     let commandFile = require(`./commands/${cmd}.js`);
-    commandFile.run(bot ,message, args);
+    commandFile.run(bot ,message, args, ops);
     delete require.cache[require.resolve(`./commands/${cmd}.js`)]
 
 } catch(e) {
@@ -502,5 +507,4 @@ bot.on("messageDelete", async message => {
   
   deletechannel.send(deleteEmbed);
 })
-
 bot.login(process.env.BOT_TOKEN)
