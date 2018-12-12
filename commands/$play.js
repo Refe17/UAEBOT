@@ -8,7 +8,6 @@ let validate = await ytdl.validateURL(args[0])
 if (!validate) return message.channel.send('Sorry, Please input a valid URL')
 let connection = await message.member.voiceChannel.join();
 let dispatcher = await connection.playStream(ytdl(args[0], { filter: 'audioonly' }));
-message.channel.send(`Now Playing: ${info.title}`);
 
 let info = await ytdl.getInfo(args[0]);
 let data = ops.active.get(message.guild.id) || {};
@@ -30,7 +29,7 @@ else {
 ops.active.set(message.guild.id, data);
 
 async function play(bot, ops ,data) {
-    bot.channels.get(data.queue[0].announceChannel).send(`Now Playing: ${data.queue[0].songTitle} | Requested By: ${data,queue[0].requester}`)
+    bot.channels.get(data.queue[0]).send(`Now Playing: ${data.queue[0].songTitle} | Requested By: ${data,queue[0].requester}`)
    data.dispatcher = await data.connection.playStream(ytdl(data.queue[0].url, { filter: 'audioonly'})); 
 data.dispatcher.guildID = data.guildID;
 data.dispatcher.once('finish', function(){
