@@ -6,10 +6,7 @@ const fs = require("fs")
 const active = new Map()
 const ownerID = "284151161291014144"
 bot.commands = new Discord.Collection();
-let ops = {
-    ownerID: ownerID,
-    active: active
-}
+
 fs.readdir("./commands/", (err, files)=>{
     if(err) console.log(err);
 
@@ -25,7 +22,10 @@ jsfile.forEach((f,i) =>{
     bot.commands.set(props.help.name, props);
 })
 })
-
+let ops = {
+    ownerID: ownerID,
+    active: active
+}
 bot.on(`ready`, ()=>{
   console.log(`${bot.user.username} is online!`);
   console.log(`----------------`);
@@ -49,7 +49,7 @@ bot.on("message", async message => {
 
 
   let commandfile = bot.commands.get(cmd.slice(prefix.length));
-  if(commandfile) commandfile.run(bot,message,args);
+  if(commandfile) commandfile.run(bot,message,args,ops);
 
   if(cmd === `${prefix}adminhelp`){
     let mRole = message.guild.roles.find("name", "● Discord STAFF")
@@ -518,6 +518,7 @@ bot.on("messageDelete", async message => {
   
   deletechannel.send(deleteEmbed);
 })
+
 
 
 bot.login(process.env.BOT_TOKEN)
