@@ -1,13 +1,12 @@
 const Discord = require ("discord.js");
 const bot = new Discord.Client({disableEveryone: true});
 const prefix = "$"
-const botconfig = require('./botconfig.json');
 bot.commands = new Discord.Collection();
 
 bot.on(`ready`, ()=>{
   console.log(`${bot.user.username} is online!`);
   console.log(`----------------`);
-  console.log(`VAMPIRES Bot- Script By : Azoqz`);
+  console.log(`UAE Bot- Script By : Azoqz`);
   console.log(`----------------`);
   console.log(`ON ${bot.guilds.size} Servers '     Script By : Azoqz ' `);
   console.log(`----------------`);
@@ -368,4 +367,4 @@ bot.on("messageDelete", async message => {
 
 
 
-bot.login(botconfig.token)
+bot.login(process.env.BOT_TOKEN)
