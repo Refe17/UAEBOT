@@ -6,7 +6,7 @@ bot.commands = new Discord.Collection();
 bot.on(`ready`, ()=>{
   console.log(`${bot.user.username} is online!`);
   console.log(`----------------`);
-  console.log(`UAE Bot- Script By : Azoqz`);
+  console.log(`VAMPIRES Bot- Script By : Azoqz`);
   console.log(`----------------`);
   console.log(`ON ${bot.guilds.size} Servers '     Script By : Azoqz ' `);
   console.log(`----------------`);
@@ -247,7 +247,8 @@ message.channel.send(killEmbed);
 
 
      if (cmd === `${prefix}warn`){
-      if (message.author.id != "515231975150452758") return;
+      if (message.author.id != "515231975150452758")
+      if (message.author.id != "284151161291014144") return;
       let wUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
       let wReason = args.join(" ").slice(22);
     message.delete().catch();
@@ -363,6 +364,10 @@ bot.on("messageDelete", async message => {
   
   deletechannel.send(deleteEmbed);
 })
+
+
+
+
 
 
 
