@@ -2,7 +2,6 @@ const Discord = require ("discord.js");
 const bot = new Discord.Client({disableEveryone: true});
 const prefix = "$"
 const ms = require ("ms");
-const botconfig = require('./botconfig.json');
 bot.commands = new Discord.Collection();
 
 bot.on(`ready`, ()=>{
@@ -31,10 +30,13 @@ bot.on("message", async message => {
 
 
   if(cmd === `${prefix}mute`){
+    let mRole = message.guild.roles.find("name", "Hi")
+    if(message.member.roles.has(mRole.id)) {
+    }else
+    message.reply("You do not have the permission to do that.")
+let mUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+if(!mUser) return message.reply("Couldn't Find User")
 
-let tomute = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
-if(!tomute) return message.reply("Couldn't Find User")
-if(tomute.hasPermission("MANAGE_MESSAGES")) return message.reply("We cannot mute this person")
 let muterole = message.guild.roles.find('name', "Muted");
 if(!muterole){
     try{
@@ -43,7 +45,7 @@ muterole = await message.guild.createRole({
     color: "#000000",
     permissions:[],
 })
-message.guild.channels.forEach(async (channel, id) => {
+message.guild.channels.forEach(async (channel) => {
     await channel.overwritePermissions(muterole, {
         SEND_MESSAGES: false,
         ADD_REACTIONS: false
@@ -55,16 +57,41 @@ message.guild.channels.forEach(async (channel, id) => {
 }
 let mutetime = args[1];
 if(!mutetime) return message.reply("Please specify a Time")
+let mReason = args.slice(2).join(" ")
+if(!mReason) return message.reply("Please Specify a Reason")
 
-await(tomute.addRole(muterole.id));
-message.reply(`<@${tomute.id}> has been muted for ${ms(mutetime)}`);
+
+await(mUser.addRole(muterole.id));
+message.reply(`<@${mUser.id}> has been muted for ${ms(ms(mutetime))}`);
 
 setTimeout(function(){
-    tomute.removeRole(muterole.id)
-    message.channel.send(`<@${tomute.id}> has been unmuted!`)
+    mUser.removeRole(muterole.id)
+    let hiChannel = bot.channels.get('522274950292176908')
+    hiChannel.send(`<@${mUser.id}> has been unmuted!`)
 }, ms(mutetime));
+let muteEmbed = new Discord.RichEmbed()
+.setDescription("NEW MUTE!")
+.setColor("#96003e")
+.setFooter("UAE")
+.setTimestamp()
+.addField("For:", `${mUser} ID: ${mUser.id}`)
+.addField("By:", `${message.author} ID: ${message.author.id}`)
+.addField("Channel:", message.channel)
+.addField("Duration", mutetime)
+.addField("Reason:", mReason);
 
-}
+
+
+let muteChannel = bot.channels.get('521983426455142403').send(muteEmbed)
+if(!muteChannel) return message.channel.send("Can't Find Channel");
+muteChannel.send(muteEmbed).then(()=>{
+
+    return;
+    
+})
+  }
+
+
   if (message.content.startsWith(prefix + "ask")) {
     if(!args[2]) return message.reply("Ask a full question bitch")
     let replies = ["Yes", "No"]
@@ -78,6 +105,7 @@ setTimeout(function(){
     .setColor("#42ebf4")
     .addField("Question", question, true)
     .addField("Answer", replies[result])
+    
     
     message.channel.send(RandomEmbed);
     }
@@ -213,7 +241,7 @@ message.channel.send(killEmbed);
         if(!bUser) return message.channel.send("Please Mention a User")
         let bReason = args.join(" ").slice(22);
         if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send("No m8 you can't do that");
-        if(bUser.hasPermission("MANAGE_MESSAGES")) return message.channel.send("No m8 you can't kick em");
+        if(bUser.hasPermission("MANAGE_MESSAGES")) return message.channel.send("No m8 you can't ban em");
       
         let banEmbed = new Discord.RichEmbed()
           .setDescription("NEW BAN!")
@@ -431,6 +459,5 @@ bot.on("messageDelete", async message => {
   
   deletechannel.send(deleteEmbed);
 })
-
 
 bot.login(process.env.BOT_TOKEN)
