@@ -34,13 +34,13 @@ bot.on("message", async message => {
     }else 
     return message.reply("You do not have the permission to do that.")
 
-    let adminhelp = new Discord.RichEmbed
+    let adminhelp = new Discord.RichEmbed()
     .setDescription("Admin Help")
     .addField("$ban `MENTION REASON`", "Bans the mentioned user")
     .addField("$kick `MENTION REASON`", "Kicks the mentioned user")
     .addField("$mute `MENTION DURATION REASON`", "Mutes the mentioned user")
     .addField("$warn `MENTION WARNMESSAGE`", "Warns the mentioned user")
-    .addField("awarn MENTION REASON", "ADMINSTRATION WARN. - Not every staff can use this command...  ")
+    .addField("$awarn `MENTION REASON`", "ADMINSTRATION WARN. - Not every staff can use this command :slight_smile: :broken_heart:")
 
     message.channel.send(adminhelp)
 
@@ -495,6 +495,5 @@ bot.on("messageDelete", async message => {
   
   deletechannel.send(deleteEmbed);
 })
-
 
 bot.login(process.env.BOT_TOKEN)
