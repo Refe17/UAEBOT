@@ -330,8 +330,10 @@ message.channel.send(killEmbed);
 
      if (cmd === `${prefix}warn`){
          message.delete();
-      if (message.author.id != "515231975150452758")
-      if (message.author.id != "284151161291014144") return;
+         let wRole = message.guild.roles.find("name", "● Discord STAFF")
+         if(message.member.roles.has(wRole.id)) {
+         }else 
+         return message.channel.send("Nope.")
       let wUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
       if (!wUser) return message.channel.send("Please Mention a User")
       let wReason = args.join(" ").slice(22);
@@ -473,6 +475,7 @@ bot.on("messageDelete", async message => {
   
   deletechannel.send(deleteEmbed);
 })
+
 
 
 bot.login(process.env.BOT_TOKEN)
