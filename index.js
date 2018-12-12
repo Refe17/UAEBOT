@@ -28,7 +28,27 @@ bot.on("message", async message => {
   let commandfile = bot.commands.get(cmd.slice(prefix.length));
   if(commandfile) commandfile.run(bot,message,args);
 
+  if(cmd === `${prefix}adminhelp`){
+    let mRole = message.guild.roles.find("name", "● Discord STAFF")
+    if(message.member.roles.has(mRole.id)) {
+    }else 
+    return message.reply("You do not have the permission to do that.")
 
+    let adminhelp = new Discord.RichEmbed
+    .setDescription("Admin Help")
+    .addField("$ban `MENTION REASON`", "Bans the mentioned user")
+    .addField("$kick `MENTION REASON`", "Kicks the mentioned user")
+    .addField("$mute `MENTION DURATION REASON`", "Mutes the mentioned user")
+    .addField("$warn `MENTION WARNMESSAGE`", "Warns the mentioned user")
+    .addField("awarn MENTION REASON", "ADMINSTRATION WARN. - Not every staff can use this command...  ")
+
+    message.channel.send(adminhelp)
+
+
+
+
+
+}
   if(cmd === `${prefix}mute`){
     let mRole = message.guild.roles.find("name", "● Discord STAFF")
     if(message.member.roles.has(mRole.id)) {
@@ -475,7 +495,6 @@ bot.on("messageDelete", async message => {
   
   deletechannel.send(deleteEmbed);
 })
-
 
 
 bot.login(process.env.BOT_TOKEN)
