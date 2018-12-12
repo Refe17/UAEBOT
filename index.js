@@ -1,6 +1,8 @@
 const Discord = require ("discord.js");
 const bot = new Discord.Client({disableEveryone: true});
 const prefix = "$"
+const ms = require ("ms");
+const botconfig = require('./botconfig.json');
 bot.commands = new Discord.Collection();
 
 bot.on(`ready`, ()=>{
@@ -27,6 +29,42 @@ bot.on("message", async message => {
   let commandfile = bot.commands.get(cmd.slice(prefix.length));
   if(commandfile) commandfile.run(bot,message,args);
 
+
+  if(cmd === `${prefix}mute`){
+
+let tomute = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+if(!tomute) return message.reply("Couldn't Find User")
+if(tomute.hasPermission("MANAGE_MESSAGES")) return message.reply("We cannot mute this person")
+let muterole = message.guild.roles.find('name', "Muted");
+if(!muterole){
+    try{
+muterole = await message.guild.createRole({
+    name: "Muted",
+    color: "#000000",
+    permissions:[],
+})
+message.guild.channels.forEach(async (channel, id) => {
+    await channel.overwritePermissions(muterole, {
+        SEND_MESSAGES: false,
+        ADD_REACTIONS: false
+    });
+});
+    }catch(e){
+        console.log(e.stack);
+    }
+}
+let mutetime = args[1];
+if(!mutetime) return message.reply("Please specify a Time")
+
+await(tomute.addRole(muterole.id));
+message.reply(`<@${tomute.id}> has been muted for ${ms(mutetime)}`);
+
+setTimeout(function(){
+    tomute.removeRole(muterole.id)
+    message.channel.send(`<@${tomute.id}> has been unmuted!`)
+}, ms(mutetime));
+
+}
   if (message.content.startsWith(prefix + "ask")) {
     if(!args[2]) return message.reply("Ask a full question bitch")
     let replies = ["Yes", "No"]
@@ -272,6 +310,32 @@ message.channel.send(killEmbed);
     return;
       })
     }
+    if (cmd === `${prefix}awarn`){
+        message.delete();
+     if (message.author.id != "515231975150452758")
+     if (message.author.id != "284151161291014144") return;
+     let wUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+     if (!wUser) return message.channel.send("Please Mention a User")
+     let wReason = args.join(" ").slice(22);
+   message.delete().catch();
+   let botmessage = args.join(" ");
+   message.channel.send(botmessage);
+   
+   let warnEmbed = new Discord.RichEmbed()
+   .setDescription("NEW ADMINSTRATION WARN!")
+   .setColor("#96003e")
+   .setTimestamp()
+   .addField("For:", `${wUser} ID: ${wUser.id}`)
+   .addField("By:", `${message.author} ID: ${message.author.id}`)
+   .addField("Channel:", message.channel)
+   .addField("Reason:", wReason);
+   
+   let warnChannel = bot.channels.get('521984073095315466').send(warnEmbed)
+   if(!warnChannel) return message.channel.send("Can't Find Channel");
+     warnChannel.send(warnEmbed).then(()=>{
+   return;
+     })
+   }
   if (message.content.startsWith(prefix + "clear")) {
     message.delete();
     if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("**You cannot do this command**")
@@ -367,5 +431,6 @@ bot.on("messageDelete", async message => {
   
   deletechannel.send(deleteEmbed);
 })
+
 
 bot.login(process.env.BOT_TOKEN)
