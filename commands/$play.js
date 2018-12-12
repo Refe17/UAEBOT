@@ -11,7 +11,6 @@ let connection = await message.member.voiceChannel.join();
 let dispatcher = await connection.playStream(ytdl(args[0], { filter: 'audioonly' }));
 message.channel.send(`Now Playing: ${info.title}`);
 
-let info = await ytdl.getInfo(args[0]);
 
 let data = ops.active.get(message.guild.id) || {};
 if (!data.connection) data.connection = await message.member.voiceChannel.join();
@@ -39,7 +38,7 @@ data.dispatcher.once('finish', function(){
     finish(bot, ops , this);
 });
 }
-function finish(bot, ops, dispatcher)
+function finish(bot, ops, dispatcher) {
 
 let fetched = ops.active.get(dispatcher.guildID);
 fetched.queue.shift();
@@ -52,7 +51,7 @@ if (fetched.queue.length > 0) {
     let vc = bot.guilds.get(dispatcher.guildID).me.voiceChannel;
     if (vc) vc.leave()
 }
-
+}
 
 }
 module.exports.help = {
