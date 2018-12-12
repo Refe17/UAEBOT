@@ -1,5 +1,5 @@
 
-exports.run = async (bot, message, args, ops) => {
+exports.run = (bot, message, args, ops) => {
     if (!message.member.voiceChannel) return message.voiceChannel.send("Please connect to a voice channel")
 
     if(!message.guild.me.voiceChannel.id) return message.channel.send("Sorry, the bot isn't connected to the voice channel.");
