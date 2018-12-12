@@ -2,8 +2,7 @@ const Discord = require ("discord.js");
 const bot = new Discord.Client({disableEveryone: true});
 const prefix = "$"
 const ms = require ("ms");
-const yt = require('ytdl-core');
-const tokens = require('./tokens.json');
+const ytdl = require('ytdl-core');
 bot.commands = new Discord.Collection();
 
 bot.on(`ready`, ()=>{
@@ -502,7 +501,7 @@ if (message.content.startsWith(prefix + "play")) {
 
 if(!message.member.voiceChannel) return message.channel.send('Please connect to a voice channel')
 
-if (message.guild.member.voiceChannel) return message.channel.send("Sorry, the bot is already connected to a voice channel")
+if (message.guild.me.voiceChannel) return message.channel.send("Sorry, the bot is already connected to a voice channel")
 if (!args[0]) return message.channel.send('Sorry, please input a url following the command')
 let validate = await ytdl.validateURL(args[0])
 if (!validate) return message.channel.send('Sorry, Please input a valid URL')
