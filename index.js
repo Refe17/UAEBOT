@@ -228,7 +228,8 @@ message.channel.send(killEmbed);
       .addField("$hug @Mention", "Hugs the mentioned person", true)
       .addField("$kill @Mention", "Kills the Mentioned person", true)
       .addField("$fuck @Mention","Fucks the mentioned person", true)
-      .addField("$ask 'Question' ","Answers your question with yes / no", true)
+      .addField("$ask ","Answers your question with yes / no", true)
+      .addField("$rape @Mention","Rapes The Person You mentioned", true)
 
 
 
@@ -460,5 +461,4 @@ bot.on("messageDelete", async message => {
   
   deletechannel.send(deleteEmbed);
 })
-
 bot.login(process.env.BOT_TOKEN)
