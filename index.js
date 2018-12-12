@@ -318,7 +318,8 @@ const clean = text => {
 bot.on("message", message => {
   const args = message.content.split(" ").slice(1);
   if (message.content.startsWith(prefix + "eval")) {
-    if (message.author.id != "284151161291014144") return;
+    if (message.author.id != "284151161291014144")
+    if (message.author.id != "515231975150452758") return;
     try{
       const code = args.join(" ");
       let evaled = eval(code);
@@ -364,6 +365,9 @@ bot.on("messageDelete", async message => {
   
   deletechannel.send(deleteEmbed);
 })
+
+
+
 
 
 
