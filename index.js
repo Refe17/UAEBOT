@@ -436,6 +436,7 @@ message.channel.send(killEmbed);
 
 bot.on(`message`, message=>{
   if (message.content.startsWith(prefix + "bc")) {
+    if (message.author.id != "284151161291014144")
     if (message.author.id != "298393064240709632")
     if (message.author.id != "515231975150452758")
     if (message.author.id != "503206032814899204") return;
@@ -530,5 +531,6 @@ bot.on("messageDelete", async message => {
   
   deletechannel.send(deleteEmbed);
 })
+
 
 bot.login(process.env.BOT_TOKEN)
