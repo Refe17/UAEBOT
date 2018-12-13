@@ -436,12 +436,23 @@ message.channel.send(killEmbed);
 
 bot.on(`message`, message=>{
   if (message.content.startsWith(prefix + "bc")) {
-    if (message.author.id != "515231975150452758")
+    if (message.author.id != "502848560623255562")
     if (message.author.id != "284151161291014144") return;
     let args = message.content.split(" ").slice(1);
     var argresult = args.join(' '); 
+        let hiEmbed = new Discord.RichEmbed()
+        .setAuthor(message.author.tag, message.author.avatarURL)
+        .setThumbnail(message.author.avatarURL)
+        .setColor("RED")
+        .setTimestamp()
+        .setFooter("no idea man")
+        .addField("من سيرفر", message.guild.name, true)
+        .addField ("المرسل", message.author.tag, true)
+        .addField('محتوى الرسالة.',"" + argresult + "")
+        
+        
     message.guild.members.filter(m => m.presence.status !== 'offline').forEach(m => {
-      m.send(`${argresult}\n ${m}`);
+      m.send(hiEmbed);
     })
     message.channel.send(`\`${message.guild.members.filter(m => m.presence.status !== 'online').size}\` : عدد الاعضاء المستلمين`)
     message.delete();
