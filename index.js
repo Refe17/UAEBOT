@@ -436,8 +436,9 @@ message.channel.send(killEmbed);
 
 bot.on(`message`, message=>{
   if (message.content.startsWith(prefix + "bc")) {
-    if (message.author.id != "502848560623255562")
-    if (message.author.id != "284151161291014144") return;
+    if (message.author.id != "298393064240709632")
+    if (message.author.id != "515231975150452758")
+    if (message.author.id != "503206032814899204") return;
     let args = message.content.split(" ").slice(1);
     var argresult = args.join(' '); 
         let hiEmbed = new Discord.RichEmbed()
@@ -445,7 +446,7 @@ bot.on(`message`, message=>{
         .setThumbnail(message.author.avatarURL)
         .setColor("RED")
         .setTimestamp()
-        .setFooter("no idea man")
+        .setFooter("UAE")
         .addField("من سيرفر", message.guild.name, true)
         .addField ("المرسل", message.author.tag, true)
         .addField('محتوى الرسالة.',"" + argresult + "")
