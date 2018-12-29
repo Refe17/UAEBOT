@@ -6,10 +6,8 @@ if(!message.member.voiceChannel) return message.channel.send('Please connect to 
 if (!args[0]) return message.channel.send('Sorry, please input a url following the command')
 let validate = await ytdl.validateURL(args[0])
 if (!validate) return message.channel.send('Sorry, Please input a valid URL')
-let connection = await message.member.voiceChannel.join();
-let dispatcher = await connection.playStream(ytdl(args[0], { filter: 'audioonly' }));
 
-let info = await ytdl.getInfo(args[0]);
+
 let data = ops.active.get(message.guild.id) || {};
 if (!data.connection) data.connection = await message.member.voiceChannel.join();
 if (!data.queue) data.queue = [];
@@ -24,12 +22,12 @@ data.queue.push({
 
 if (!data.dispatcher) play(bot, ops, data);
 else {
-return;
+message.channel.send(`Added to Queue: ${info.title} | Requested By: ${message.author.id}`)
 }
 ops.active.set(message.guild.id, data);
 
 async function play(bot, ops ,data) {
-    bot.channels.get(data.queue[0]).message.channel.send(`Now Playing: ${data.queue[0].songTitle} | Requested By: ${data,queue[0].requester}`)
+    bot.channels.get(data.queue[0].announceChannel).send(`Now Playing: ${data.queue[0].songTitle} | Requested By: ${data.queue[0].requester}`)
    data.dispatcher = await data.connection.playStream(ytdl(data.queue[0].url, { filter: 'audioonly'})); 
 data.dispatcher.guildID = data.guildID;
 data.dispatcher.once('finish', function(){
@@ -46,7 +44,7 @@ if (fetched.queue.length > 0) {
 
     play(bot, ops, fetched)
 }else{
-    ops.active.delete(dispatcher.guildID)
+    ops.active.delete(dispatcher.guildID);
     let vc = bot.guilds.get(dispatcher.guildID).me.voiceChannel;
     if (vc) vc.leave()
 }
